@@ -83,7 +83,7 @@
 
             auth.signInWithEmailAndPassword(emailTeks, passwordTeks)
                 .then(() => {
-                    location.href = "home.html";
+                    location.href = "home.html"; // ATAU "./home.html"
                 })
                 .catch(err => {
                     alert("Login gagal: " + err.message);
