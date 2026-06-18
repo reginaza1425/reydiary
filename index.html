@@ -79,7 +79,7 @@
             const password = document.getElementById("password").value;
 
             auth.signInWithEmailAndPassword(email, password)
-                .then(() => location.href = "index.html")
+                .then(() => location.href = "home.html")
                 .catch(err => alert("Login gagal: " + err.message));
         }
 
