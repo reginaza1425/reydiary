@@ -1,81 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CatatanKu</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Diary</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style src="/css/style.css"></style>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png');
+            background-size: auto;
+        }
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        body::before {
+            content: "📝";
+            font-size: 150px;
+            opacity: 0.05;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="/css/style.css" />
-
+        .auth-card {
+            min-width: 300px;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
 </head>
 
-<body>
-  <div class="container py-5">
-    <div class="text-end me-4">
-      <button class="btn btn-sm btn-outline-danger" onclick="logout()">Logout</button>
+<body class="d-flex justify-content-center align-items-center vh-100">
+
+    <!-- Login Form -->
+    <div id="loginCard" class="card p-4 shadow auth-card">
+        <h4 class="text-center mb-3">Masuk ke ReyDiary</h4>
+        <input id="email" type="email" class="form-control mb-2" placeholder="Email">
+        <input id="password" type="password" class="form-control mb-3" placeholder="Password">
+        <button onclick="login()" class="btn btn-primary w-100">Login</button>
+        <p class="text-center mt-3 small">Belum punya akun? <a href="#" onclick="toggleForm()">Daftar</a></p>
     </div>
 
-    <h1 class="text-center mb-4"><i class="fa-solid fa-book"></i> diary</h1>
-
-    <div class="mb-4">
-      <input type="text" id="search" class="form-control" placeholder="Cari catatan...">
+    <!-- Register Form -->
+    <div id="registerCard" class="card p-4 shadow auth-card d-none">
+        <h4 class="text-center mb-3">Daftar Akun ReyDiary</h4>
+        <input id="regEmail" type="email" class="form-control mb-2" placeholder="Email">
+        <input id="regPassword" type="password" class="form-control mb-3" placeholder="Password (min. 6 karakter)">
+        <button onclick="register()" class="btn btn-success w-100">Daftar</button>
+        <p class="text-center mt-3 small">Sudah punya akun? <a href="#" onclick="toggleForm()">Login</a></p>
     </div>
 
-    <!-- Grid Daftar Catatan -->
-    <div class="row" id="noteGrid"></div>
-  </div>
-
-  <!-- Floating Button -->
-  <button class="btn btn-primary btn-lg rounded-circle shadow-lg d-flex align-items-center justify-content-center"
-    id="addNoteBtn" data-bs-toggle="modal" data-bs-target="#noteModal">
-    <i class="fa-solid fa-plus"></i>
-  </button>
-
-  <!-- Modal Tambah Catatan -->
-  <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="noteModalLabel">Tambah Catatan</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="noteTitle" class="form-label">Judul</label>
-            <input type="text" id="noteTitle" class="form-control" placeholder="Judul catatan">
-          </div>
-          <div class="mb-3">
-            <label for="noteDate" class="form-label">Tanggal</label>
-            <input type="date" id="noteDate" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="noteInput" class="form-label">Isi Catatan</label>
-            <textarea id="noteInput" class="form-control" placeholder="Tulis catatan di sini..." rows="4"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-primary" onclick="addNote()">Simpan</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 
 
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6g1LeFdKivGZzhcbT7CGuk9Dx6ZTHcsE",
+            authDomain: "diary-82f92.firebaseapp.com",
+            projectId: "diary-82f92"
+        };
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-    <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/app.js"></script>
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
+        function toggleForm() {
+            document.getElementById("loginCard").classList.toggle("d-none");
+            document.getElementById("registerCard").classList.toggle("d-none");
+        }
+
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => location.href = "index.html")
+                .catch(err => alert("Login gagal: " + err.message));
+        }
+
+        function register() {
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPassword").value;
+
+            if (password.length < 6) {
+                alert("Password minimal 6 karakter.");
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    alert("Berhasil daftar! Silakan login.");
+                    toggleForm(); // balik ke login
+                })
+                .catch(err => alert("Gagal daftar: " + err.message));
+        }
+    </script>
 </body>
 
 </html>
