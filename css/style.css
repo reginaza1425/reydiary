@@ -1,0 +1,51 @@
+body {
+    background-color: #f2f2f2;
+    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png');
+    background-size: auto;
+  }
+  body::before {
+    content: "📝";
+    font-size: 150px;
+    opacity: 0.05;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+    #addNoteBtn i {
+      font-size: 24px;
+    }
+    #addNoteBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      padding: 0;
+      z-index: 1050;
+    }
+  
+    
+    .card-note {
+      height: 100%;
+      padding: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .card-note:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .card-note {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+  
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
