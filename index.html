@@ -41,7 +41,7 @@
         <h4 class="text-center mb-3">Masuk ke ReyDiary</h4>
         <input id="email" type="email" class="form-control mb-2" placeholder="Email">
         <input id="password" type="password" class="form-control mb-3" placeholder="Password">
-        <button onclick="login()" class="btn btn-primary w-100">Login</button>
+        <button onclick="prosesLoginRey()" class="btn btn-primary w-100">Login</button>
         <p class="text-center mt-3 small">Belum punya akun? <a href="#" onclick="toggleForm()">Daftar</a></p>
     </div>
 
@@ -74,16 +74,22 @@
             document.getElementById("registerCard").classList.toggle("d-none");
         }
 
-        function login() {
-            // 1. Ubah nama variabelnya dari emailInput menjadi email agar sinkron
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById("password").value;
+        function prosesLoginRey() {
+            // Kita langsung tembak .value-nya di sini
+            const emailTeks = document.getElementById('email').value.trim();
+            const passwordTeks = document.getElementById('password').value;
 
-            // 2. Sekarang variabel 'email' di bawah ini sudah berisi teks string yang benar
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => location.href = "home.html")
-                .catch(err => alert("Login gagal: " + err.message));
+            console.log("Email yang dikirim:", emailTeks); // Untuk ngecek di console
+
+            auth.signInWithEmailAndPassword(emailTeks, passwordTeks)
+                .then(() => {
+                    location.href = "home.html";
+                })
+                .catch(err => {
+                    alert("Login gagal: " + err.message);
+                });
         }
+
         function register() {
             const email = document.getElementById("regEmail").value;
             const password = document.getElementById("regPassword").value;

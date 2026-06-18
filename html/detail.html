@@ -27,7 +27,7 @@
     <p id="noteContent" class="editable" contenteditable="false" style="white-space: pre-wrap;"></p>
 
     <div class="mt-4 d-flex justify-content-between">
-      <a href="index.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
+      <a href="home.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
       <div>
         <button id="editBtn" class="btn btn-warning"><i class="fas fa-edit"></i> Edit</button>
         <button id="saveBtn" class="btn btn-success d-none"><i class="fas fa-save"></i> Simpan</button>
@@ -76,7 +76,7 @@
 
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        location.href = "login.html";
+        location.href = "index.html";
       } else {
         initPage(user);
       }
@@ -165,7 +165,7 @@
           const modal = bootstrap.Modal.getInstance(document.getElementById("deleteModal"));
           modal.hide();
           alert("Catatan berhasil dihapus.");
-          window.location.href = "index.html";
+          window.location.href = "home.html";
         }).catch((error) => {
           alert("Gagal menghapus catatan: " + error.message);
           console.error(error);
