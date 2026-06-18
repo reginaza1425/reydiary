@@ -75,14 +75,15 @@
         }
 
         function login() {
-            const emailInput = document.getElementById('email').value.trim();
+            // 1. Ubah nama variabelnya dari emailInput menjadi email agar sinkron
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById("password").value;
 
+            // 2. Sekarang variabel 'email' di bawah ini sudah berisi teks string yang benar
             auth.signInWithEmailAndPassword(email, password)
                 .then(() => location.href = "home.html")
                 .catch(err => alert("Login gagal: " + err.message));
         }
-
         function register() {
             const email = document.getElementById("regEmail").value;
             const password = document.getElementById("regPassword").value;
